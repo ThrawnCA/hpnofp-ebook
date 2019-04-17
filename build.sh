@@ -24,7 +24,13 @@ make_epub () {
   else
     DEST_FILE="$2"
   fi
-  (cd "$SRC_DIR" && zip -X0 "$DEST_FILE" mimetype && zip -r "$DEST_FILE" META-INF OEBPS)
+  (cd "$SRC_DIR" && zip -qX0 "$DEST_FILE" mimetype && zip -qr "$DEST_FILE" META-INF OEBPS)
+}
+
+make_epub_if_needed () {
+  if [ ! -e "$OUTPUT_DIR/$ARTIFACT" ]; then
+    make_epub $DIR "$OUTPUT_DIR/$ARTIFACT"
+  fi
 }
 
 check_epub () {
@@ -67,15 +73,11 @@ make_target () {
       to_pdf
       ;;
     mobi)
-      if [ ! -e "$OUTPUT_DIR/$ARTIFACT" ]; then
-        make_epub $DIR "$OUTPUT_DIR/$ARTIFACT"
-      fi
+      make_epub_if_needed
       to_mobi
       ;;
     pdf)
-      if [ ! -e "$OUTPUT_DIR/$ARTIFACT" ]; then
-        make_epub $DIR "$OUTPUT_DIR/$ARTIFACT"
-      fi
+      make_epub_if_needed
       to_pdf
       ;;
     epub)
@@ -86,6 +88,7 @@ make_target () {
       make_epub $DIR "$OUTPUT_DIR/$ARTIFACT"
       ;;
     check)
+      make_epub_if_needed
       check_epub || exit 1
       ;;
     clean)
