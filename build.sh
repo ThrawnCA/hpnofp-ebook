@@ -27,6 +27,12 @@ make_epub () {
   (cd "$SRC_DIR" && zip -X0 "$DEST_FILE" mimetype && zip -r "$DEST_FILE" META-INF OEBPS)
 }
 
+check_epub () {
+  if (which epubcheck 2>/dev/null); then
+    epubcheck "$OUTPUT_DIR/$ARTIFACT" || return 1
+  fi
+}
+
 to_mobi () {
   if (which ebook-convert 2>/dev/null); then
     echo "Converting to MOBI using Calibre ebook-convert..."
@@ -78,6 +84,9 @@ make_target () {
       ;;
     uncompressed_epub)
       make_epub $DIR "$OUTPUT_DIR/$ARTIFACT"
+      ;;
+    check)
+      check_epub || exit 1
       ;;
     clean)
       clean
