@@ -43,7 +43,7 @@ make_epub_if_needed () {
 
 check_epub () {
   if (which epubcheck 2>/dev/null); then
-    epubcheck "$OUTPUT_DIR/$ARTIFACT" || return 1
+    epubcheck "$EPUB_ARTIFACT" || return 1
   fi
 }
 
