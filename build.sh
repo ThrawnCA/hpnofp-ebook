@@ -101,9 +101,6 @@ make_target () {
       make_epub "$INPUT_DIR" "$EPUB_ARTIFACT"
       ;;
     check)
-      check_epub || exit 1
-      ;;
-    check)
       make_epub_if_needed
       check_epub || exit 1
       ;;
