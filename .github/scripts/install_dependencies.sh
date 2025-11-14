@@ -31,8 +31,8 @@ else
   unzip -o "./target/EB_Garamond.zip" -d "./target/EB_Garamond"
 
   echo "Installing EB Garamond..."
-  mkdir -p "/usr/share/fonts/truetype/custom/EB_Garamond"
-  find "./target/EB_Garamond" -name "*.ttf" -exec mv '{}' "/usr/share/fonts/truetype/custom/EB_Garamond" \;
+  mkdir -p "$EBGARAMOND_FONT_DIR"
+  find "./target/EB_Garamond" -name "*.ttf" -exec mv '{}' "$EBGARAMOND_FONT_DIR" \;
   fc-cache -f -v
 fi
 
